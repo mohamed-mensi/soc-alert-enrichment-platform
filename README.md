@@ -22,7 +22,7 @@ The platform is designed as **analyst decision support**: enrichment and risk si
 **Role:** SOC Automation & Enrichment Intern  
 **Period:** June – August 2026
 
-The production implementation integrated with enterprise SOC technologies including **TheHive 5 and QRadar**.
+The production implementation integrated with the organization's existing **SIEM and case-management infrastructure** to support automated alert enrichment and analyst triage.
 
 The public repository reconstructs the core engineering concepts and workflows without exposing organization-specific implementation details.
 
