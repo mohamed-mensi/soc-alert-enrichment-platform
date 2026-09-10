@@ -343,7 +343,7 @@ class CasePlatformClient:
         )
         response.raise_for_status()
         return response.json()
-    # hive/case_platform_client.py (add inside CasePlatformClient class)
+    # case_platform/case_platform_client.py (add inside CasePlatformClient class)
 
     def create_alert(self, alert: dict) -> dict:
         """

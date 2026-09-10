@@ -28,7 +28,7 @@ Design rules (same as report_common.py):
 Usage:
     from enrichment.company_enrichment import CompanyEnrichment
     ce = CompanyEnrichment(mock_mode=True)      # or False with a key in .env
-    info = ce.lookup_domain("pwc.com")
+    info = ce.lookup_domain("veridian-audit.test")
 """
 
 import logging
@@ -56,9 +56,9 @@ REQUEST_TIMEOUT = 8
 # offline tests exercise the same normalized schema production returns. Values
 # for known partners in the sample scenarios. Unknown domains → not-found.
 _MOCK_BY_DOMAIN = {
-    "pwc.com": {
-        "name":           "PwC",
-        "legal_name":     "PwC International Reference Ltd",
+    "veridian-audit.test": {
+        "name":           "Veridian Audit",
+        "legal_name":     "Veridian Audit International Reference Ltd",
         "description":    "Audit and assurance, consulting and tax services",
         "industry":       "Professional Services",
         "industries":     ["Auditing", "Tax Services", "Consulting",
@@ -68,7 +68,7 @@ _MOCK_BY_DOMAIN = {
         "revenue":        "Over 1b",
         "country":        "United Kingdom",
         "city":           "London",
-        "website":        "https://pwc.com",
+        "website":        "https://veridian-audit.test",
         "linkedin_url":   "https://www.linkedin.com/company/2732",
         "year_founded":   1998,
         "match_score":    84,
@@ -350,15 +350,15 @@ def _humanize(slug) -> Optional[str]:
 
 # ── Standalone self-test ────────────────────────────────────────────────────────
 # Prints the RAW provider JSON in real mode so the parser can be corrected.
-#   python -m enrichment.company_enrichment pwc.com
-#   python -m enrichment.company_enrichment pwc.com --real
+#   python -m enrichment.company_enrichment veridian-audit.test
+#   python -m enrichment.company_enrichment veridian-audit.test --real
 if __name__ == "__main__":
     import sys, json
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     real = "--real" in sys.argv
-    domain = args[0] if args else "pwc.com"
+    domain = args[0] if args else "veridian-audit.test"
 
     ce = CompanyEnrichment(mock_mode=not real)
 

@@ -34,32 +34,23 @@ services:
       - soc_network
 
   # -----------------------------------------------------------
-  # Example case management platform — one compatible implementation
-  # (e.g., TheHive CE via strangebee/thehive). Swap the image
-  # for any platform that implements the same REST API.
+  # Example case management platform — generic adapter.
+  # Set CASE_PLATFORM_IMAGE to your platform's image
+  # (e.g., an open-source IR platform). Default is a placeholder.
   # -----------------------------------------------------------
+  # Generic placeholder — replace with your platform's image and config.
+  # The default below is illustrative; set CASE_PLATFORM_IMAGE to a real
+  # case management platform that exposes a compatible REST API.
   case-platform:
-    image: strangebee/thehive:5.2.7-1
+    image: ${CASE_PLATFORM_IMAGE:-example/case-platform:latest}
     container_name: soc_case_platform
     restart: unless-stopped
-    depends_on:
-      cassandra:
-        condition: service_healthy
     ports:
       - "9000:9000"
     environment:
-      - JVM_OPTS=-Xms512m -Xmx1g
-      - TH_SECRET=${CASE_PLATFORM_SECRET:-change-me-for-local-development}
-      - TH_NO_CONFIG_SECRET=false
-    command:
-      - --cql-hostnames
-      - cassandra
-      - --cql-username
-      - cassandra
-      - --cql-password
-      - cassandra
+      - PLATFORM_SECRET=${CASE_PLATFORM_SECRET:-change-me-for-local-development}
     volumes:
-      - case_platform_data:/opt/thp/thehive/files
+      - case_platform_data:/data
     healthcheck:
       test: ["CMD-SHELL", "curl -sf http://localhost:9000/api/v1/status || exit 1"]
       interval: 30s

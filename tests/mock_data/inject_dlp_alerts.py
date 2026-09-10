@@ -109,13 +109,13 @@ DLP_SCENARIOS = [
             },
             {
                 "dataType": "mail",
-                "data":     "audit.team@pwc.com",
-                "message":  "Recipient — PwC audit team",
+                "data":     "audit.team@veridian-audit.test",
+                "message":  "Recipient — Veridian Audit audit team",
                 "tags":     ["recipient", "external", "vendor"]
             },
             {
                 "dataType": "domain",
-                "data":     "pwc.com",
+                "data":     "veridian-audit.test",
                 "message":  "Recipient domain — established Big 4 audit firm",
                 "tags":     ["recipient-domain", "known-vendor"]
             },
