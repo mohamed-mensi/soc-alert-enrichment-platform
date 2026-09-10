@@ -1,0 +1,56 @@
+From: security-alert@anonrdp.com
+To: adele.vance@oddoBHF.com
+Subject: [URGENT] Your Microsoft Account Will Be Suspended in 24 Hours
+Date: Mon, 07 Jul 2026 02:14:33 +0000
+Message-ID: <1234567890.abc@anonrdp.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="boundary_alt_001"
+Received: from mail.anonrdp.com (170.83.13.37)
+  by mx.oddoBHF.com with SMTP; Mon, 07 Jul 2026 02:14:35 +0000
+Authentication-Results: mx.oddoBHF.com;
+  spf=fail (domain anonrdp.com does not designate
+  170.83.13.37 as permitted sender)
+  smtp.mailfrom=security-alert@anonrdp.com;
+  dkim=none;
+  dmarc=fail action=none header.from=anonrdp.com
+X-Spam-Status: Yes, score=8.4
+X-Original-To: adele.vance@oddoBHF.com
+X-Mailer: PHPMailer 6.0.0
+
+--boundary_alt_001
+Content-Type: text/plain; charset="UTF-8"
+
+Dear Microsoft Account User,
+
+We have detected suspicious activity on your Microsoft account associated
+with adele.vance@oddoBHF.com. Your account will be SUSPENDED within 24 hours
+unless you verify your identity immediately.
+
+Click the link below to verify your account now:
+http://anonrdp.com/verify?token=abc123&user=adele.vance
+
+If you do not verify within 24 hours, you will lose access to:
+- Your emails
+- Your OneDrive files
+- Your Microsoft 365 applications
+
+This is an automated security alert. Do not reply to this email.
+
+Microsoft Security Team
+--boundary_alt_001
+Content-Type: text/html; charset="UTF-8"
+
+<html>
+<body>
+<p>Dear Microsoft Account User,</p>
+<p>We have detected <strong>suspicious activity</strong> on your Microsoft
+account associated with <strong>adele.vance@oddoBHF.com</strong>.</p>
+<p>Your account will be <strong style="color:red">SUSPENDED within 24 hours
+</strong> unless you verify your identity immediately.</p>
+<p><a href="http://anonrdp.com/verify?token=abc123&user=adele.vance"
+style="background:blue;color:white;padding:10px">
+VERIFY MY ACCOUNT NOW</a></p>
+<p>Microsoft Security Team</p>
+</body>
+</html>
+--boundary_alt_001--

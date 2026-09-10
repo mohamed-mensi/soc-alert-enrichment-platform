@@ -1,0 +1,52 @@
+From: finance@oddо-bhf.com
+To: adele.vance@oddoBHF.com
+Subject: Urgent: Wire Transfer Authorization Required - Client Matter #2847
+Date: Mon, 07 Jul 2026 09:42:17 +0100
+Message-ID: <98765432.xyz@oddо-bhf.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="boundary_mix_002"
+Received: from mail.oddо-bhf.com (91.142.74.28)
+  by mx.oddoBHF.com with SMTP; Mon, 07 Jul 2026 09:42:19 +0100
+Authentication-Results: mx.oddoBHF.com;
+  spf=softfail (domain oddо-bhf.com does not designate
+  91.142.74.28 as permitted sender)
+  smtp.mailfrom=finance@oddо-bhf.com;
+  dkim=none;
+  dmarc=fail action=none header.from=oddо-bhf.com
+X-Spam-Status: No, score=2.1
+X-Original-To: adele.vance@oddoBHF.com
+X-Mailer: Microsoft Outlook 16.0
+
+--boundary_mix_002
+Content-Type: text/plain; charset="UTF-8"
+
+Dear Adele,
+
+Following our earlier conversation, please process the wire transfer
+for client matter #2847 as soon as possible.
+
+Details:
+  Amount: EUR 47,500.00
+  Beneficiary: Nexus Capital Partners Ltd
+  IBAN: GB29 NWBK 6016 1331 9268 19
+  BIC: NWBKGB2L
+  Reference: CLIENT-2847-FINAL
+
+This is time-sensitive — the client is waiting for confirmation.
+Please process and send me the transaction reference by EOD.
+
+Best regards,
+Marc Dupont
+Head of Finance
+ODDO BHF Group
+
+--boundary_mix_002
+Content-Type: application/pdf; name="wire_instructions_2847.pdf"
+Content-Disposition: attachment; filename="wire_instructions_2847.pdf"
+Content-Transfer-Encoding: base64
+
+JVBERi0xLjQKJcOkw7zDtsOfCjIgMCBvYmoKPDwvTGVuZ3RoIDMgMCBSL0ZpbHRlci9GbGF0
+ZURlY29kZT4+CnN0cmVhbQp4nCtUMjJQslIqS80rKUpVslIqLk4tykvMTQUAVRsHlQplbmRz
+dHJlYW0KZW5kb2JqCg==
+
+--boundary_mix_002--

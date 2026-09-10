@@ -1,0 +1,58 @@
+From: lee.grant@oddoBHF.com
+To: contact@databroker-services.net
+CC: backup@quickdump.io
+Subject: Client Portfolio Export - As Requested
+Date: Thu, 17 Jul 2026 18:33:51 +0100
+Message-ID: <20260717183351.lee.dlp002@oddoBHF.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="boundary_dlp_002"
+X-Mailer: Microsoft Outlook 16.0
+X-DLP-Policy: Client-Data-External
+X-DLP-Classification: RESTRICTED
+X-DLP-Score: 94
+X-Originating-IP: 10.0.0.30
+Received: from OUTLOOK-01.oddoBHF.com (10.0.0.25)
+  by mx.oddoBHF.com with SMTP; Thu, 17 Jul 2026 18:33:52 +0100
+Authentication-Results: mx.oddoBHF.com;
+  spf=pass smtp.mailfrom=lee.grant@oddoBHF.com;
+  dkim=pass header.d=oddoBHF.com;
+  dmarc=pass
+
+--boundary_dlp_002
+Content-Type: text/plain; charset="UTF-8"
+
+Please find the client portfolio export you requested.
+
+The file contains full client records including:
+- Client names and contact details
+- Portfolio valuations as of Q2 2026
+- Account numbers and IBAN references
+- Investment mandates and risk profiles
+
+Let me know if you need anything else.
+
+Lee
+
+--boundary_dlp_002
+Content-Type: application/zip
+Content-Disposition: attachment; filename="client_portfolio_full_export_july2026.zip"
+Content-Transfer-Encoding: base64
+X-Document-Author: Lee Grant
+X-Document-Company: ODDO BHF
+X-Document-Created: 2026-07-17T17:55:00
+X-Document-Modified: 2026-07-17T18:28:00
+
+UEsDBBQAAAAIABhRAVUAAAAAAAAAAAAAAAAWAAAAY2xpZW50X3BvcnRmb2xpby5jc3ZQSwECFA
+AUAAAACAAAAABhRAVUAAAAAAAAAAAAAAAAFgAAAAAAAAAQAAAAAAAAAAAAYWxpZW50X3BvcnRm
+b2xpby5jc3ZQSwUGAAAAAAEAAQBEAAAAVAAAAAAA
+
+--boundary_dlp_002
+Content-Type: application/pdf
+Content-Disposition: attachment; filename="mandate_summary_restricted.pdf"
+Content-Transfer-Encoding: base64
+
+JVBERi0xLjQKJcOkw7zDtsOfCjIgMCBvYmoKPDwvTGVuZ3RoIDMgMCBSL0ZpbHRlci9GbGF0
+ZURlY29kZT4+CnN0cmVhbQp4nCtUMjJQslIqS80rKUpVslIqLk4tykvMTQUAVRsHlQplbmRz
+dHJlYW0KZW5kb2JqCg==
+
+--boundary_dlp_002--

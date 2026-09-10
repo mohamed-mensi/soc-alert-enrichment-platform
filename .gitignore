@@ -1,0 +1,9 @@
+.env
+data/*.db
+__pycache__/
+*.pyc
+.venv/
+*.log
+reports/*.json
+dataset/*.csv
+dataset/*.zip

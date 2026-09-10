@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DLP Investigation - {{ alert_id }}</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg:#eef2f7;
+    --card:#ffffff;
+    --primary:#111827;
+    --danger:#dc2626;
+    --warning:#f59e0b;
+    --success:#16a34a;
+    --border:#e5e7eb;
+    --muted:#6b7280;
+}
+* { box-sizing:border-box; }
+body {
+    margin:0; padding:40px;
+    font-family:'Inter',sans-serif;
+    background:var(--bg); color:#1f2937;
+}
+.container { max-width:1100px; margin:auto; }
+.header {
+    background:linear-gradient(135deg,#0f172a,#1e3a5f);
+    color:white; padding:30px; border-radius:18px; margin-bottom:25px;
+}
+.header h1 { margin:0; font-size:32px; }
+.header p { opacity:.8; margin:6px 0 0; }
+.header .direction {
+    display:inline-block; margin-top:12px; padding:4px 12px;
+    background:rgba(255,255,255,.12); border-radius:20px; font-size:13px;
+}
+.risk-banner {
+    padding:20px; border-radius:15px; margin-bottom:25px;
+    font-size:18px; font-weight:600;
+    display:flex; justify-content:space-between; align-items:center; gap:12px;
+}
+.risk-critical, .risk-high { background:#fee2e2; color:#991b1b; }
+.risk-medium { background:#fef3c7; color:#92400e; }
+.risk-low { background:#dcfce7; color:#166534; }
+.risk-banner .verdict {
+    font-size:14px; padding:6px 14px; border-radius:20px;
+    background:rgba(0,0,0,.08);
+}
+.grid {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px; margin-bottom:25px;
+}
+.stat {
+    background:white; padding:25px; border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.05);
+}
+.stat h3 { margin:0; font-size:30px; }
+.stat span { color:var(--muted); font-size:14px; }
+.card {
+    background:var(--card); padding:25px; border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.05); margin-bottom:25px;
+}
+.title {
+    font-size:18px; font-weight:700; margin-bottom:15px;
+    display:flex; align-items:center; gap:8px;
+}
+table { width:100%; border-collapse:collapse; }
+td,th { padding:12px; border-bottom:1px solid var(--border); text-align:left; vertical-align:top; }
+th { background:#f9fafb; white-space:nowrap; }
+.badge { padding:5px 12px; border-radius:20px; font-size:13px; font-weight:600; }
+.badge-danger { background:#fee2e2; color:#991b1b; }
+.badge-success { background:#dcfce7; color:#166534; }
+.badge-warning { background:#fef3c7; color:#92400e; }
+.badge-muted { background:#e5e7eb; color:#374151; }
+.badge-info { background:#dbeafe; color:#1e40af; }
+.factor-add { color:#991b1b; font-weight:600; }
+.factor-mit { color:#166534; font-weight:600; }
+.ioc { color:#b91c1c; font-weight:700; }
+pre {
+    background:#111827; color:#d1d5db; padding:20px; border-radius:12px;
+    overflow:auto; font-size:13px; white-space:pre-wrap; word-break:break-word;
+}
+.narrative {
+    background:#0f172a; color:#e2e8f0; padding:24px; border-radius:12px;
+    font-size:14px; line-height:1.6; white-space:pre-wrap; word-break:break-word;
+}
+details summary { cursor:pointer; font-weight:600; }
+a { color:#2563eb; text-decoration:none; }
+.note { color:var(--muted); font-size:13px; margin-top:8px; }
+.legit-LEGITIMATE, .legit-LIKELY_LEGITIMATE { color:#166534; }
+.legit-UNKNOWN { color:#92400e; }
+.legit-SUSPICIOUS, .legit-MALICIOUS { color:#991b1b; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+    <h1>🔒 DLP Email Investigation</h1>
+    <p>Alert ID: <strong>{{ alert_id }}</strong> — {{ alert.title }}</p>
+    <span class="direction">Direction: Internal → External</span>
+</div>
+
+<div class="risk-banner risk-{{ risk_assessment.band|default('low') }}">
+    <span>
+    {% if summary.any_malicious %}
+        ⚠️ Recipient matched threat intelligence — immediate review recommended
+    {% elif risk_assessment.band in ['critical','high'] %}
+        ⚠️ Elevated data-loss risk — analyst review required
+    {% else %}
+        ✅ No confirmed malicious indicators — routine review
+    {% endif %}
+    </span>
+    <span class="verdict">Score {{ risk_assessment.score }}/100 · {{ verdict_level }}</span>
+</div>
+<div class="grid">
+    <div class="stat">
+        <h3>{{ risk_assessment.score }}</h3>
+        <span>Risk Score / 100</span>
+    </div>
+    <div class="stat">
+        <h3 class="legit-{{ recipient.legitimacy.level }}">{{ recipient.legitimacy.level|replace('_',' ') }}</h3>
+        <span>Recipient Legitimacy</span>
+    </div>
+    <div class="stat">
+        <h3>{{ data_analysis.attachments|length }}</h3>
+        <span>Attachments</span>
+    </div>
+    <div class="stat">
+        <h3>{{ risk_assessment.risk_factors|length }}</h3>
+        <span>Risk Factors</span>
+    </div>
+    <div class="stat">
+        <h3>{{ risk_assessment.mitigating_factors|length }}</h3>
+        <span>Mitigating Factors</span>
+    </div>
+</div>
+
+<!-- Alert overview -->
+<div class="card">
+    <div class="title">📋 Alert Overview</div>
+    <table>
+        <tr><th>Title</th><td>{{ alert.title }}</td></tr>
+        <tr><th>Source</th><td>{{ alert.source|default('—') }}</td></tr>
+        <tr><th>Severity</th><td>{{ alert.severity_label|default('—') }}</td></tr>
+        <tr><th>Created</th><td>{{ alert.created_at|default('—') }}</td></tr>
+        <tr><th>Verdict</th>
+            <td><span class="badge
+                {% if verdict_level=='ESCALATE' %}badge-danger
+                {% elif verdict_level=='NEEDS_REVIEW' %}badge-warning
+                {% else %}badge-success{% endif %}">{{ verdict_level }}</span></td></tr>
+    </table>
+</div>
+
+<!-- Sender -->
+<div class="card">
+    <div class="title">👤 Sender Context</div>
+    <table>
+        <tr><th>Address</th><td>{{ sender.address }}</td></tr>
+        <tr><th>Domain</th><td>{{ sender.domain }}</td></tr>
+        {% if sender.identity and sender.identity.found %}
+        <tr><th>Name</th><td>{{ sender.identity.display_name }}</td></tr>
+        <tr><th>Department</th><td>{{ sender.identity.department }} / {{ sender.identity.job_title }}</td></tr>
+        <tr><th>Manager</th><td>{{ sender.identity.manager|default('—') }}</td></tr>
+        <tr><th>Criticality</th>
+            <td><span class="badge
+                {% if sender.identity.criticality in ['CRITICAL','HIGH'] %}badge-danger
+                {% elif sender.identity.criticality=='MEDIUM' %}badge-warning
+                {% else %}badge-muted{% endif %}">{{ sender.identity.criticality }}</span></td></tr>
+        <tr><th>MFA</th>
+            <td>{% if sender.identity.mfa_enabled %}<span class="badge badge-success">Enabled</span>
+                {% else %}<span class="badge badge-danger">Not enabled</span>{% endif %}</td></tr>
+        <tr><th>AD Risk Level</th><td>{{ sender.identity.risk_level|default('—') }}</td></tr>
+        {% else %}
+        <tr><th>Identity</th><td><span class="badge badge-warning">Not found in directory — attributes unconfirmed</span></td></tr>
+        {% endif %}
+    </table>
+</div>
+
+<!-- Recipient -->
+<div class="card">
+    <div class="title">📮 Recipient Analysis</div>
+    <table>
+        <tr><th>Address</th><td>{{ recipient.address }}</td></tr>
+        <tr><th>Domain</th><td>{{ recipient.domain }}</td></tr>
+        <tr><th>Type</th>
+            <td><span class="badge
+                {% if recipient.type=='disposable' %}badge-danger
+                {% elif recipient.type in ['webmail','suspicious'] %}badge-warning
+                {% elif recipient.type=='internal' %}badge-success
+                {% else %}badge-info{% endif %}">{{ recipient.type }}</span></td></tr>
+        <tr><th>Legitimacy</th>
+            <td><span class="legit-{{ recipient.legitimacy.level }}"><strong>{{ recipient.legitimacy.level|replace('_',' ') }}</strong></span>
+                (confidence: {{ recipient.legitimacy.confidence }})
+                <ul>{% for r in recipient.legitimacy.reasons %}<li>{{ r }}</li>{% endfor %}</ul></td></tr>
+        {% if recipient.cc %}<tr><th>CC</th><td>{{ recipient.cc|join(', ') }}</td></tr>{% endif %}
+        {% if recipient.has_bcc %}<tr><th>BCC</th><td><span class="badge badge-warning">{{ recipient.bcc|length }} hidden recipient(s)</span> {{ recipient.bcc|join(', ') }}</td></tr>{% endif %}
+    </table>
+</div>
+
+<!-- Organization context -->
+<div class="card">
+    <div class="title">🏢 Recipient Organization Context</div>
+    <table>
+        <tr><th>Organization</th><td>{{ recipient.organization_context.organization|default('Unknown') }}</td></tr>
+        <tr><th>Source</th><td>{{ recipient.organization_context.org_source }}</td></tr>
+        <tr><th>Category</th><td>{{ recipient.organization_context.category }}</td></tr>
+        <tr><th>Country</th><td>{{ recipient.organization_context.country|default('Unknown') }}</td></tr>
+        <tr><th>Registrar</th><td>{{ recipient.organization_context.registrar|default('Unknown') }}</td></tr>
+        <tr><th>Domain Age</th><td>{{ recipient.domain_intel.age_label|default('Unknown') }}</td></tr>
+        <tr><th>Confidence</th>
+            <td><span class="badge
+                {% if recipient.organization_context.confidence=='high' %}badge-success
+                {% elif recipient.organization_context.confidence=='medium' %}badge-warning
+                {% else %}badge-muted{% endif %}">{{ recipient.organization_context.confidence }}</span></td></tr>
+    </table>
+    {% for n in recipient.organization_context.notes %}<div class="note">ℹ️ {{ n }}</div>{% endfor %}
+</div>
+
+<!-- Recipient business context (descriptive only — NON-SCORING) -->
+{% set bc = recipient.business_context %}
+{% if bc and bc.applicable %}
+<div class="card">
+    <div class="title">🔎 Recipient Business Context
+        <span class="badge badge-info" style="font-weight:600">descriptive · non-scoring</span>
+    </div>
+
+    {% if bc.found %}
+    <table>
+        <tr><th>Company</th><td>{{ bc.name|default('Unknown') }}{% if bc.legal_name and bc.legal_name != bc.name %} <span class="note">({{ bc.legal_name }})</span>{% endif %}</td></tr>
+        {% if bc.description %}<tr><th>What they do</th><td>{{ bc.description }}</td></tr>{% endif %}
+        <tr><th>Industry</th><td>{{ bc.industry|default('Unknown') }}{% if bc.industries %} <span class="note">— {{ bc.industries|join(', ') }}</span>{% endif %}</td></tr>
+        {% if bc.business_type %}<tr><th>Type</th><td>{{ bc.business_type }}</td></tr>{% endif %}
+        {% if bc.employee_range %}<tr><th>Employees</th><td>{{ bc.employee_range }}</td></tr>{% endif %}
+        {% if bc.revenue %}<tr><th>Revenue</th><td>{{ bc.revenue }}</td></tr>{% endif %}
+        <tr><th>Headquarters</th><td>{% if bc.city %}{{ bc.city }}, {% endif %}{{ bc.country|default('Unknown') }}</td></tr>
+        {% if bc.year_founded %}<tr><th>Founded</th><td>{{ bc.year_founded }}</td></tr>{% endif %}
+        {% if bc.website %}<tr><th>Website</th><td><a href="{{ bc.website }}" rel="noopener noreferrer nofollow" target="_blank">{{ bc.website }}</a></td></tr>{% endif %}
+        {% if bc.linkedin_url %}<tr><th>LinkedIn</th><td><a href="{{ bc.linkedin_url }}" rel="noopener noreferrer nofollow" target="_blank">{{ bc.linkedin_url }}</a></td></tr>{% endif %}
+        <tr><th>Confidence</th>
+            <td><span class="badge
+                {% if bc.confidence=='high' %}badge-success
+                {% elif bc.confidence=='medium' %}badge-warning
+                {% else %}badge-muted{% endif %}">{{ bc.confidence }}</span>
+                <span class="note">source: {{ bc.source }}{% if bc.match_score is not none %} · match {{ bc.match_score }}/100{% endif %}</span></td></tr>
+    </table>
+    {% if bc.relevance_note %}<div class="note">🧭 {{ bc.relevance_note }}</div>{% endif %}
+    {% elif bc.looked_up %}
+    <p><span class="badge badge-warning">no business record found</span>
+       No company profile was found for <strong>{{ recipient.domain }}</strong> in the external company database.</p>
+    {% else %}
+    <p><span class="badge badge-muted">not retrieved</span>
+       Business context was not looked up for <strong>{{ recipient.domain }}</strong>.</p>
+    {% endif %}
+
+    {% for n in bc.notes %}<div class="note">ℹ️ {{ n }}</div>{% endfor %}
+    <div class="note" style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px">
+        ⚖️ Business context is descriptive only. It is <strong>not</strong> part of the risk score
+        or the legitimacy verdict — a company's self-description can be gamed. Trust signals come
+        from WHOIS age, registrar and IOC reputation above.
+    </div>
+</div>
+{% endif %}
+
+<!-- Data exposure -->
+<div class="card">
+    <div class="title">📊 Data Exposure</div>
+    <table>
+        <tr><th>Gateway DLP Score</th><td>{{ data_analysis.gateway_dlp_score|default('N/A') }}{% if data_analysis.gateway_dlp_score is not none %}/100{% endif %}</td></tr>
+        <tr><th>Classification</th><td>{{ data_analysis.gateway_dlp_classification|default('N/A') }}</td></tr>
+        <tr><th>Sensitive Keywords</th>
+            <td>critical: {{ data_analysis.keyword_results.summary.critical_count|default(0) }},
+                high: {{ data_analysis.keyword_results.summary.high_count|default(0) }},
+                medium: {{ data_analysis.keyword_results.summary.medium_count|default(0) }}</td></tr>
+    </table>
+    {% if data_analysis.file_analysis.files %}
+    <table style="margin-top:15px">
+        <tr><th>Attachment</th><th>Type</th><th>Size</th><th>Risk</th></tr>
+        {% for f in data_analysis.file_analysis.files %}
+        <tr>
+            <td>{{ f.filename }}{% if f.sensitive_name %} <span class="badge badge-warning">sensitive name</span>{% endif %}</td>
+            <td>{{ f.extension|upper }}</td>
+            <td>{{ f.size_bytes }} B</td>
+            <td><span class="badge
+                {% if f.risk=='critical' %}badge-danger
+                {% elif f.risk=='high' %}badge-warning
+                {% else %}badge-muted{% endif %}">{{ f.risk }}</span></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}<div class="note">No attachments.</div>{% endif %}
+    {% if data_analysis.document_metadata.author or data_analysis.document_metadata.company %}
+    <table style="margin-top:15px">
+        <tr><th>Document Author</th><td>{{ data_analysis.document_metadata.author|default('—') }}</td></tr>
+        <tr><th>Document Company</th><td>{{ data_analysis.document_metadata.company|default('—') }}</td></tr>
+        <tr><th>Modified</th><td>{{ data_analysis.document_metadata.modified|default('—') }}
+            {% if data_analysis.document_metadata.modified_just_before_send %}<span class="badge badge-warning">modified just before send</span>{% endif %}</td></tr>
+    </table>
+    {% endif %}
+</div>
+
+<!-- Behavioral context -->
+<div class="card">
+    <div class="title">🕵️ Behavioral Context</div>
+    <table>
+        <tr><th>Self-send (exact)</th><td>{{ behavioral_analysis.self_send_exact }}</td></tr>
+        <tr><th>Self-send (fuzzy)</th><td>{{ behavioral_analysis.self_send_fuzzy.is_fuzzy_match|default(false) }}
+            {% if behavioral_analysis.self_send_fuzzy.method %}({{ behavioral_analysis.self_send_fuzzy.method }}){% endif %}</td></tr>
+        <tr><th>Prior Correspondence</th>
+            <td>{% if behavioral_analysis.prior_correspondence.has_prior %}<span class="badge badge-info">Yes</span>
+                <ul>{% for e in behavioral_analysis.prior_correspondence.evidence %}<li>{{ e }}</li>{% endfor %}</ul>
+                {% else %}<span class="badge badge-muted">None detected</span>{% endif %}</td></tr>
+        <tr><th>Sent</th><td>{{ behavioral_analysis.timing.datetime_str|default('—') }}
+            {% if behavioral_analysis.timing.is_after_hours %}<span class="badge badge-warning">after hours</span>{% endif %}
+            {% if behavioral_analysis.timing.is_weekend %}<span class="badge badge-warning">weekend</span>{% endif %}</td></tr>
+    </table>
+</div>
+
+<!-- Threat intelligence -->
+<div class="card">
+    <div class="title">🧬 Threat Intelligence</div>
+    {% if threat_intelligence.recipient_domain_ioc and threat_intelligence.recipient_domain_ioc.is_malicious %}
+    <p class="ioc">⚠️ Recipient domain {{ recipient.domain }} matched:
+        {{ threat_intelligence.recipient_domain_ioc.matched_sources|join(', ') }}
+        (score {{ threat_intelligence.recipient_domain_ioc.reputation_score }}/100)</p>
+    {% else %}
+    <span class="badge badge-success">No recipient-domain IOC match</span>
+    {% endif %}
+    {% if threat_intelligence.routing_ip_iocs %}
+    <p class="ioc">⚠️ {{ threat_intelligence.routing_ip_iocs|length }} routing IP(s) matched a threat feed.</p>
+    {% endif %}
+    <table style="margin-top:15px">
+        <tr><th>Authentication</th><td>{{ threat_intelligence.auth_summary|default('—') }}</td></tr>
+        {% if threat_intelligence.received_ips %}<tr><th>External Routing IPs</th><td>{{ threat_intelligence.received_ips|join(', ') }}</td></tr>{% endif %}
+    </table>
+</div>
+
+<!-- Risk assessment -->
+<div class="card">
+    <div class="title">⚖️ Risk Assessment — {{ risk_assessment.score }}/100 ({{ risk_assessment.band|upper }})</div>
+    <table>
+        <tr><th style="width:50%">Risk Factors (+)</th><th style="width:50%">Mitigating Factors (−)</th></tr>
+        <tr>
+            <td>
+                {% if risk_assessment.risk_factors %}<ul>
+                {% for f in risk_assessment.risk_factors %}
+                <li><span class="factor-add">+{{ f.weight }}</span> {{ f.detail }}</li>
+                {% endfor %}</ul>{% else %}<span class="badge badge-muted">None</span>{% endif %}
+            </td>
+            <td>
+                {% if risk_assessment.mitigating_factors %}<ul>
+                {% for f in risk_assessment.mitigating_factors %}
+                <li><span class="factor-mit">−{{ f.weight }}</span> {{ f.detail }}</li>
+                {% endfor %}</ul>{% else %}<span class="badge badge-muted">None</span>{% endif %}
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- AI narrative -->
+<div class="card">
+    <div class="title">🤖 Analyst Narrative
+        <span class="badge badge-muted" style="font-size:11px">{{ ai_analysis.narrative_source }}</span>
+    </div>
+    <div class="narrative">{{ ai_analysis.narrative }}</div>
+</div>
+
+<!-- Recommended actions -->
+<div class="card">
+    <div class="title">✅ Recommended Analyst Action</div>
+    <ol>{% for a in recommended_actions %}<li>{{ a }}</li>{% endfor %}</ol>
+</div>
+
+<!-- Evidence -->
+<div class="card">
+    <div class="title">📎 Evidence</div>
+    <table>
+        <tr><th>Category</th><th>Observation</th><th>Source</th></tr>
+        {% for e in evidence %}
+        <tr><td>{{ e.category }}</td><td>{{ e.observation }}</td><td><code>{{ e.source }}</code></td></tr>
+        {% endfor %}
+    </table>
+</div>
+
+<!-- Raw email -->
+<div class="card">
+    <div class="title">📄 Raw Email</div>
+    <details>
+        <summary>Show raw message</summary>
+        <pre>{{ raw_email }}</pre>
+    </details>
+</div>
+
+</div>
+</body>
+</html>

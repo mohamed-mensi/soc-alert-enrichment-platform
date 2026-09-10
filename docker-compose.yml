@@ -1,0 +1,84 @@
+# =============================================================
+# docker-compose.yml — Local Development Environment
+# SOC Alert Enrichment Platform (example stack)
+# Case management platform + backing store
+# Any compatible case management platform can be used;
+# case management platform Community Edition is shown here as one example.
+# =============================================================
+
+services:
+
+  # -----------------------------------------------------------
+  # Cassandra — backing store for the example case platform
+  # -----------------------------------------------------------
+  cassandra:
+    image: cassandra:4.1
+    container_name: soc_cassandra
+    restart: unless-stopped
+    environment:
+      - CASSANDRA_CLUSTER_NAME=thp
+      - CASSANDRA_DC=datacenter1
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - MAX_HEAP_SIZE=1G
+      - HEAP_NEWSIZE=200M
+    volumes:
+      - cassandra_data:/var/lib/cassandra
+    healthcheck:
+      test: ["CMD", "cqlsh", "-e", "describe keyspaces"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+    networks:
+      - soc_network
+
+  # -----------------------------------------------------------
+  # Example case management platform (case management platform CE) — one of several
+  # compatible platforms (e.g., case management platform, Shuffle, other IR platforms)
+  # -----------------------------------------------------------
+  case-platform:
+    image: strangebee/case_platform:5.2.7-1
+    container_name: soc_case_platform
+    restart: unless-stopped
+    depends_on:
+      cassandra:
+        condition: service_healthy
+    ports:
+      - "9000:9000"
+    environment:
+      - JVM_OPTS=-Xms512m -Xmx1g
+      - TH_SECRET=superSecretKeyForLocalDev1234567890!!
+      - TH_NO_CONFIG_SECRET=false
+    command:
+      - --cql-hostnames
+      - cassandra
+      - --cql-username
+      - cassandra
+      - --cql-password
+      - cassandra
+    volumes:
+      - case_platform_data:/opt/thp/case_platform/files
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:9000/api/v1/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 15
+      start_period: 120s
+    networks:
+      - soc_network
+
+# -----------------------------------------------------------
+# Volumes
+# -----------------------------------------------------------
+volumes:
+  cassandra_data:
+    driver: local
+  case_platform_data:
+    driver: local
+
+# -----------------------------------------------------------
+# Network
+# -----------------------------------------------------------
+networks:
+  soc_network:
+    driver: bridge

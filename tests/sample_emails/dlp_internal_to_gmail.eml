@@ -1,0 +1,51 @@
+From: adele.vance@oddoBHF.com
+To: adelevance92@gmail.com
+Subject: Q2 Financial Report - CONFIDENTIAL
+Date: Fri, 18 Jul 2026 23:47:22 +0100
+Message-ID: <20260718234722.adele.dlp001@oddoBHF.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="boundary_dlp_001"
+X-Mailer: Microsoft Outlook 16.0
+X-DLP-Policy: Financial-Data-External
+X-DLP-Classification: CONFIDENTIAL
+X-DLP-Score: 87
+X-Originating-IP: 10.0.0.15
+Received: from OUTLOOK-01.oddoBHF.com (10.0.0.25)
+  by mx.oddoBHF.com with SMTP; Fri, 18 Jul 2026 23:47:23 +0100
+Authentication-Results: mx.oddoBHF.com;
+  spf=pass smtp.mailfrom=adele.vance@oddoBHF.com;
+  dkim=pass header.d=oddoBHF.com;
+  dmarc=pass
+
+--boundary_dlp_001
+Content-Type: text/plain; charset="UTF-8"
+
+Hi,
+
+Please find attached the Q2 2026 financial report for my personal
+records. I need to review it over the weekend.
+
+The attachment contains:
+- Revenue figures per business unit
+- Client portfolio valuations
+- SWIFT transaction summaries
+- Internal cost projections for H2 2026
+
+IBAN references and account numbers are included in the appendix.
+
+Best,
+Adele
+
+--boundary_dlp_001
+Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+Content-Disposition: attachment; filename="Q2_Financial_Report_CONFIDENTIAL_2026.xlsx"
+Content-Transfer-Encoding: base64
+X-Document-Author: Adele Vance
+X-Document-Company: ODDO BHF
+X-Document-Created: 2026-07-15T09:23:00
+X-Document-Modified: 2026-07-18T23:41:00
+
+UEsDBBQABgAIAAAAIQDfpNJsWgEAACAFAAATAAgCW0NvbnRlbnRfVHlwZXNdLnhtbCCiBAIo
+oAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+--boundary_dlp_001--
