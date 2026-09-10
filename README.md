@@ -1,95 +1,190 @@
 # SOC Alert Enrichment Platform
 
-> **Internship proof-of-concept — anonymized.** No production data or internal infrastructure details are included. The platform is presented as a generic integration that works with any SIEM, case management platform and corporate directory.
+> **SOC automation project developed during a cybersecurity internship — sanitized public portfolio version.**
 
-A Python service that automatically enriches security alerts with contextual information — threat intelligence, identity context and domain intelligence — and publishes structured, analyst-readable reports. The enrichment is explainable and never issues a final verdict; the analyst always decides.
+An automated enrichment platform designed to provide SOC analysts with contextual information around security alerts, including **threat intelligence, identity context, phishing/DLP analysis, domain intelligence, and explainable risk signals**.
+
+The platform is designed as **analyst decision support**: enrichment and risk signals are transparent and explainable, while the final security decision always remains with the analyst.
+
+> [!WARNING]
+> **Public Portfolio Version**
+>
+> The original internship implementation operated within an enterprise financial SOC environment. This repository is a sanitized reconstruction for portfolio purposes.
+>
+> It contains **no production alerts, customer data, credentials, internal hostnames, proprietary configurations, or internal infrastructure details**. Organization-specific integrations are represented through generic adapters, synthetic data, and offline mocks.
+
+---
+
+## Internship Context
+
+**Organization:** ODDO BHF Tunis  
+**Environment:** Financial Services SOC  
+**Role:** SOC Automation & Enrichment Intern  
+**Period:** June – August 2026
+
+The production implementation integrated with enterprise SOC technologies including **TheHive 5 and QRadar**.
+
+The public repository reconstructs the core engineering concepts and workflows without exposing organization-specific implementation details.
+
+### Project Goals
+
+The platform was designed to:
+
+- Reduce repetitive manual alert enrichment
+- Centralize threat-intelligence context
+- Correlate alerts with identity and business context
+- Provide explainable risk signals before analyst assignment
+- Automate phishing and DLP investigation workflows
+- Generate structured, analyst-readable reports
+- Support local AI-assisted triage without sending sensitive alert data to external LLM APIs
+
+---
 
 ## Highlights
 
-- **Threat intel aggregation** — collectors for abuse.ch (Feodo, ThreatFox, URLhaus) and AlienVault OTX, normalized into a local SQLite IOC database with deduplication and feed-run history
-- **Enrichment engine** — polls the case management platform for new alerts/cases, partitions observables (internal IPs/e-mails → identity, external IPs/hashes/URLs/domains → reputation) and builds explicit risk signals
-- **Identity context** — corporate directory lookup with offline mock mode and real API mode (e.g., Microsoft Entra ID / any LDAP/Graph-compatible directory)
-- **Reputation context** — local IOC lookup with multi-source score aggregation and malware-family / threat-actor attribution
-- **DLP workflow** (internal → external) — sender identity, recipient classification (personal webmail / disposable / suspicious), WHOIS, self-send detection, sensitive-keyword scoring, file analysis and contextual risk scoring
-- **Phishing workflow** (external → internal) — SPF/DKIM/DMARC, WHOIS, homoglyph detection, IOC checks and per-alert signals/summary/narrative
-- **Recipient business context** — descriptive enrichment for external domains, explicitly kept out of scoring
-- **Local LLM layer** — optional advisory narrative via a locally-running model (e.g., Ollama). No data leaves the machine; the deterministic report is always complete without it
-- **Reporting** — JSON reports + Flask viewer with per-type templates
+### Threat Intelligence
+
+- Collectors for **abuse.ch** feeds:
+  - Feodo Tracker
+  - ThreatFox
+  - URLhaus
+- **AlienVault OTX** integration
+- IOC normalization and deduplication
+- Local **SQLite** IOC database
+- Feed execution history and persistence
+- Multi-source reputation aggregation
+- Malware-family and threat-actor attribution where available
+
+### Alert Enrichment Engine
+
+- Polls the case-management platform for new alerts/cases
+- Automatically partitions observables by type and context
+- Internal IPs and email addresses → identity enrichment
+- External IPs, hashes, URLs and domains → reputation enrichment
+- Generates explicit, explainable risk signals
+- Produces structured reports for analyst review
+- Writes enrichment results back to the case-management platform
+
+### Identity Context
+
+- Corporate directory integration
+- Microsoft Entra ID / Graph-compatible architecture
+- LDAP-compatible integration model
+- Offline mock mode for development and testing
+- User and organizational context enrichment
+
+### DLP Workflow
+
+For **internal → external** data-transfer scenarios:
+
+- Sender identity enrichment
+- Recipient classification
+- Personal webmail / disposable / suspicious-domain detection
+- WHOIS enrichment
+- Self-send detection
+- Sensitive-keyword analysis
+- File analysis
+- Contextual risk scoring
+
+### Phishing Workflow
+
+For **external → internal** email scenarios:
+
+- SPF validation
+- DKIM validation
+- DMARC validation
+- WHOIS analysis
+- Homoglyph detection
+- IOC reputation checks
+- Per-alert security signals
+- Structured analyst summary and narrative
+
+### Recipient Business Context
+
+External domains can optionally be enriched with descriptive business information using an external company-information API.
+
+This context is deliberately **kept separate from security scoring** and is provided only to help analysts understand the organization associated with a recipient domain.
+
+### Local LLM Layer
+
+An optional locally running LLM, such as **Ollama**, can generate analyst-facing triage narratives.
+
+The architecture follows a fail-safe approach:
+
+- The deterministic enrichment report is always generated
+- The LLM is optional
+- No external LLM API is required
+- Sensitive alert data can remain within the local environment
+- The LLM provides advisory context rather than a final verdict
+
+---
+
+## Project Scale
+
+The internship implementation included:
+
+- **60,000+** threat-intelligence indicators collected and normalized
+- **3** automated phishing attack scenarios
+- **6** phishing validation checks
+- **4-layer** DLP enrichment workflow
+- Automated alert enrichment before analyst assignment
+- Multi-source IOC reputation analysis
+- Local LLM-assisted analyst narratives
+
+> Metrics describe the internship implementation and are presented at a non-sensitive level.
+
+---
 
 ## Architecture
 
-```
-[Threat feeds] ──► [Feed collector] ──► [IOC database (SQLite)]
-                                          │
-[Case platform API] ──► [Enrichment engine] ◄── [Directory / Identity]
-                              │
-                              ├──► [Observable tagging + Summary report] ──► Case platform
-                              └──► [JSON report] ──► [Report viewer]
-```
-
-Two independent scheduler threads: feed collection (default 24h) and enrichment polling (default 30s).
-
-## Quick start
-
-```bash
-# 1. Clone and configure
-git clone https://github.com/mohamed-mensi/soc-alert-enrichment-platform.git
-cd soc-alert-enrichment-platform
-cp .env.example .env   # fill in your keys
-
-# 2. Start the case management platform (example with an OSS platform)
-docker compose up -d
-
-# 3. Install dependencies
-pip install -r requirements.txt
-
-# 4. Run
-python main.py
-# Reports are at http://localhost:5000/report/<alert_id>
-```
-
-## Configuration
-
-See `.env.example`:
-
-```
-CASE_PLATFORM_URL=http://localhost:9000
-CASE_PLATFORM_API_KEY=your_key_here
-DIRECTORY_TENANT_ID=...
-DIRECTORY_CLIENT_ID=...
-DIRECTORY_CLIENT_SECRET=...
-OTX_API_KEY=...
-COMPANIES_API_KEY=...
-```
-
-All directory / intel providers have an offline mock mode so the platform and tests run without real credentials.
-
-## Project structure
-
-```
-database/        SQLite persistence (IOCs, feed runs)
-feeds/           Threat-intel collectors
-case_platform/   Case platform client (poll) + updater (write-back)
-enrichment/      Engine, IOC lookup, identity lookup, LLM, reporting
-phishing/        E-mail parser, DLP & phishing workflows
-templates/       Report HTML templates
-tests/           Offline, deterministic test suite
-```
-
-## Testing
-
-```bash
-python -m pytest tests/test_dlp_and_phishing.py -v
-# or
-python -m unittest tests.test_dlp_and_phishing -v
-```
-
-No network, case platform, WHOIS or LLM required — directory, IOC DB, WHOIS and LLM are stubbed.
-
-## Disclaimer
-
-This repository is a portfolio / internship project. It contains no customer data, no internal hostnames, credentials or infrastructure details. Any organization, domain or integration mentioned is an example among others and does not imply a specific deployment.
-
-## Acknowledgements
-
-Built during an internship — thanks to the SOC team and supervisors for their guidance.
+```text
+                         ┌──────────────────────┐
+                         │    Threat Feeds      │
+                         │ abuse.ch / OTX       │
+                         └──────────┬───────────┘
+                                    │
+                                    ▼
+                         ┌──────────────────────┐
+                         │   Feed Collectors    │
+                         └──────────┬───────────┘
+                                    │
+                                    ▼
+                         ┌──────────────────────┐
+                         │    IOC Database      │
+                         │       SQLite         │
+                         └──────────┬───────────┘
+                                    │
+                                    │
+┌──────────────────┐                ▼
+│ Case Management  │──────► ┌──────────────────────┐
+│    Platform      │         │  Enrichment Engine   │
+└──────────────────┘         │       Python         │
+                             └──────────┬───────────┘
+                                        │
+                   ┌────────────────────┼────────────────────┐
+                   │                    │                    │
+                   ▼                    ▼                    ▼
+          ┌────────────────┐   ┌────────────────┐   ┌────────────────┐
+          │ Identity       │   │ Threat Intel   │   │ Phishing / DLP │
+          │ Context        │   │ Reputation     │   │ Workflows      │
+          └────────────────┘   └────────────────┘   └────────────────┘
+                   │                    │                    │
+                   └────────────────────┼────────────────────┘
+                                        ▼
+                              ┌──────────────────────┐
+                              │ Explainable Signals  │
+                              │ + Risk Context       │
+                              └──────────┬───────────┘
+                                         │
+                         ┌───────────────┼───────────────┐
+                         ▼               ▼               ▼
+                  ┌────────────┐  ┌────────────┐  ┌──────────────┐
+                  │ Case       │  │ JSON       │  │ Local LLM    │
+                  │ Platform   │  │ Report     │  │ Narrative    │
+                  └────────────┘  └─────┬──────┘  └──────────────┘
+                                        │
+                                        ▼
+                                ┌────────────────┐
+                                │ Report Viewer  │
+                                │     Flask      │
+                                └────────────────┘
