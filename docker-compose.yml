@@ -1,9 +1,10 @@
 # =============================================================
 # docker-compose.yml — Local Development Environment
 # SOC Alert Enrichment Platform (example stack)
-# Case management platform + backing store
-# Any compatible case management platform can be used;
-# case management platform Community Edition is shown here as one example.
+# Generic case management platform + backing store.
+# The service below uses an open-source IR platform as ONE
+# example of a compatible case management API.
+# Replace the image with any platform that exposes a compatible API.
 # =============================================================
 
 services:
@@ -16,7 +17,7 @@ services:
     container_name: soc_cassandra
     restart: unless-stopped
     environment:
-      - CASSANDRA_CLUSTER_NAME=thp
+      - CASSANDRA_CLUSTER_NAME=soc-cluster
       - CASSANDRA_DC=datacenter1
       - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
       - MAX_HEAP_SIZE=1G
@@ -33,11 +34,12 @@ services:
       - soc_network
 
   # -----------------------------------------------------------
-  # Example case management platform (case management platform CE) — one of several
-  # compatible platforms (e.g., case management platform, Shuffle, other IR platforms)
+  # Example case management platform — one compatible implementation
+  # (e.g., TheHive CE via strangebee/thehive). Swap the image
+  # for any platform that implements the same REST API.
   # -----------------------------------------------------------
   case-platform:
-    image: strangebee/case_platform:5.2.7-1
+    image: strangebee/thehive:5.2.7-1
     container_name: soc_case_platform
     restart: unless-stopped
     depends_on:
@@ -47,7 +49,7 @@ services:
       - "9000:9000"
     environment:
       - JVM_OPTS=-Xms512m -Xmx1g
-      - TH_SECRET=superSecretKeyForLocalDev1234567890!!
+      - TH_SECRET=${CASE_PLATFORM_SECRET:-change-me-for-local-development}
       - TH_NO_CONFIG_SECRET=false
     command:
       - --cql-hostnames
@@ -57,7 +59,7 @@ services:
       - --cql-password
       - cassandra
     volumes:
-      - case_platform_data:/opt/thp/case_platform/files
+      - case_platform_data:/opt/thp/thehive/files
     healthcheck:
       test: ["CMD-SHELL", "curl -sf http://localhost:9000/api/v1/status || exit 1"]
       interval: 30s

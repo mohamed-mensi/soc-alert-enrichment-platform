@@ -1,21 +1,21 @@
-From: lee.grant@oddoBHF.com
-To: contact@databroker-services.net
-CC: backup@quickdump.io
+From: casey.morgan@northstar-example.test
+To: contact@external-data.test
+CC: backup@tempmail-example.test
 Subject: Client Portfolio Export - As Requested
-Date: Thu, 17 Jul 2026 18:33:51 +0100
-Message-ID: <20260717183351.lee.dlp002@oddoBHF.com>
+Date: Thu, 17 Jul 2026 18:33:51 +0000
+Message-ID: <20260717183351.casey.dlp002@northstar-example.test>
 MIME-Version: 1.0
 Content-Type: multipart/mixed; boundary="boundary_dlp_002"
 X-Mailer: Microsoft Outlook 16.0
 X-DLP-Policy: Client-Data-External
 X-DLP-Classification: RESTRICTED
 X-DLP-Score: 94
-X-Originating-IP: 10.0.0.30
-Received: from OUTLOOK-01.oddoBHF.com (10.0.0.25)
-  by mx.oddoBHF.com with SMTP; Thu, 17 Jul 2026 18:33:52 +0100
-Authentication-Results: mx.oddoBHF.com;
-  spf=pass smtp.mailfrom=lee.grant@oddoBHF.com;
-  dkim=pass header.d=oddoBHF.com;
+X-Originating-IP: 192.0.2.30
+Received: from mail01.northstar-example.test (192.0.2.25)
+  by mx.northstar-example.test with SMTP; Thu, 17 Jul 2026 18:33:52 +0000
+Authentication-Results: mx.northstar-example.test;
+  spf=pass smtp.mailfrom=casey.morgan@northstar-example.test;
+  dkim=pass header.d=northstar-example.test;
   dmarc=pass
 
 --boundary_dlp_002
@@ -23,36 +23,27 @@ Content-Type: text/plain; charset="UTF-8"
 
 Please find the client portfolio export you requested.
 
-The file contains full client records including:
-- Client names and contact details
+The file contains anonymized client records including:
+- Client identifiers and contact references
 - Portfolio valuations as of Q2 2026
-- Account numbers and IBAN references
+- Account references and transaction summaries
 - Investment mandates and risk profiles
 
 Let me know if you need anything else.
 
-Lee
+Best regards,
+Casey
 
 --boundary_dlp_002
-Content-Type: application/zip
-Content-Disposition: attachment; filename="client_portfolio_full_export_july2026.zip"
+Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+Content-Disposition: attachment; filename="Portfolio_Export_RESTRICTED_2026.xlsx"
 Content-Transfer-Encoding: base64
-X-Document-Author: Lee Grant
-X-Document-Company: ODDO BHF
-X-Document-Created: 2026-07-17T17:55:00
-X-Document-Modified: 2026-07-17T18:28:00
+X-Document-Author: Casey Morgan
+X-Document-Company: Northstar Example
+X-Document-Created: 2026-07-16T10:00:00
+X-Document-Modified: 2026-07-17T18:20:00
 
-UEsDBBQAAAAIABhRAVUAAAAAAAAAAAAAAAAWAAAAY2xpZW50X3BvcnRmb2xpby5jc3ZQSwECFA
-AUAAAACAAAAABhRAVUAAAAAAAAAAAAAAAAFgAAAAAAAAAQAAAAAAAAAAAAYWxpZW50X3BvcnRm
-b2xpby5jc3ZQSwUGAAAAAAEAAQBEAAAAVAAAAAAA
-
---boundary_dlp_002
-Content-Type: application/pdf
-Content-Disposition: attachment; filename="mandate_summary_restricted.pdf"
-Content-Transfer-Encoding: base64
-
-JVBERi0xLjQKJcOkw7zDtsOfCjIgMCBvYmoKPDwvTGVuZ3RoIDMgMCBSL0ZpbHRlci9GbGF0
-ZURlY29kZT4+CnN0cmVhbQp4nCtUMjJQslIqS80rKUpVslIqLk4tykvMTQUAVRsHlQplbmRz
-dHJlYW0KZW5kb2JqCg==
+UEsDBBQABgAIAAAAIQDfpNJsWgEAACAFAAATAAgCW0NvbnRlbnRfVHlwZXNdLnhtbCCiBAIo
+oAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
 --boundary_dlp_002--

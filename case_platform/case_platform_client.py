@@ -1,18 +1,18 @@
 """
-hive/case_platform_client.py
-====================
-Polls case management platform for new alerts and cases, reads their observables,
-and passes them to the enrichment engine.
+case_platform/case_platform_client.py
+=====================================
+Polls the case management platform for new alerts and cases, reads their
+observables, and passes them to the enrichment engine.
 
 Responsibilities:
-- Authenticate with case management platform via API key
+- Authenticate with the case platform via API key
 - Poll for new alerts since last check (every 30s)
 - Poll for new cases since last check (every 30s)
 - Fetch observables for each alert/case
 - Track last-seen timestamp to avoid re-processing
 
-case management platform API v1 is used throughout.
-All timestamps are in milliseconds (case management platform standard).
+The case platform REST API is used throughout.
+All timestamps are in milliseconds.
 
 Usage:
     from case_platform.case_platform_client import CasePlatformClient

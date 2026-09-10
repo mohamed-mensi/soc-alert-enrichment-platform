@@ -1,20 +1,20 @@
-From: adele.vance@oddoBHF.com
-To: adelevance92@gmail.com
+From: jordan.blake@northstar-example.test
+To: jordan.blake.personal@example.net
 Subject: Q2 Financial Report - CONFIDENTIAL
-Date: Fri, 18 Jul 2026 23:47:22 +0100
-Message-ID: <20260718234722.adele.dlp001@oddoBHF.com>
+Date: Fri, 18 Jul 2026 23:47:22 +0000
+Message-ID: <20260718234722.jordan.dlp001@northstar-example.test>
 MIME-Version: 1.0
 Content-Type: multipart/mixed; boundary="boundary_dlp_001"
 X-Mailer: Microsoft Outlook 16.0
 X-DLP-Policy: Financial-Data-External
 X-DLP-Classification: CONFIDENTIAL
 X-DLP-Score: 87
-X-Originating-IP: 10.0.0.15
-Received: from OUTLOOK-01.oddoBHF.com (10.0.0.25)
-  by mx.oddoBHF.com with SMTP; Fri, 18 Jul 2026 23:47:23 +0100
-Authentication-Results: mx.oddoBHF.com;
-  spf=pass smtp.mailfrom=adele.vance@oddoBHF.com;
-  dkim=pass header.d=oddoBHF.com;
+X-Originating-IP: 192.0.2.15
+Received: from mail01.northstar-example.test (192.0.2.25)
+  by mx.northstar-example.test with SMTP; Fri, 18 Jul 2026 23:47:23 +0000
+Authentication-Results: mx.northstar-example.test;
+  spf=pass smtp.mailfrom=jordan.blake@northstar-example.test;
+  dkim=pass header.d=northstar-example.test;
   dmarc=pass
 
 --boundary_dlp_001
@@ -28,20 +28,20 @@ records. I need to review it over the weekend.
 The attachment contains:
 - Revenue figures per business unit
 - Client portfolio valuations
-- SWIFT transaction summaries
+- Transaction summaries
 - Internal cost projections for H2 2026
 
-IBAN references and account numbers are included in the appendix.
+Reference numbers and account identifiers are included in the appendix.
 
 Best,
-Adele
+Jordan
 
 --boundary_dlp_001
 Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 Content-Disposition: attachment; filename="Q2_Financial_Report_CONFIDENTIAL_2026.xlsx"
 Content-Transfer-Encoding: base64
-X-Document-Author: Adele Vance
-X-Document-Company: ODDO BHF
+X-Document-Author: Jordan Blake
+X-Document-Company: Northstar Example
 X-Document-Created: 2026-07-15T09:23:00
 X-Document-Modified: 2026-07-18T23:41:00
 

@@ -1,59 +1,51 @@
-From: alex.wilber@oddoBHF.com
-To: audit.team@pwc.com
-CC: sarah.johnson@pwc.com
+From: riley.quinn@northstar-example.test
+To: audit.team@veridian-audit.test
+CC: sarah.johnson@veridian-audit.test
 Subject: RE: Annual Audit 2026 - Requested Financial Statements
-Date: Mon, 14 Jul 2026 10:22:15 +0200
-Message-ID: <20260714102215.alex.dlp003@oddoBHF.com>
+Date: Mon, 14 Jul 2026 10:22:15 +0000
+Message-ID: <20260714102215.riley.dlp003@northstar-example.test>
 MIME-Version: 1.0
 Content-Type: multipart/mixed; boundary="boundary_dlp_003"
 X-Mailer: Microsoft Outlook 16.0
 X-DLP-Policy: Financial-Data-External
 X-DLP-Classification: CONFIDENTIAL
 X-DLP-Score: 71
-X-Originating-IP: 10.0.0.20
-Received: from OUTLOOK-01.oddoBHF.com (10.0.0.25)
-  by mx.oddoBHF.com with SMTP; Mon, 14 Jul 2026 10:22:16 +0200
-Authentication-Results: mx.oddoBHF.com;
-  spf=pass smtp.mailfrom=alex.wilber@oddoBHF.com;
-  dkim=pass header.d=oddoBHF.com;
+X-Originating-IP: 192.0.2.20
+Received: from mail01.northstar-example.test (192.0.2.25)
+  by mx.northstar-example.test with SMTP; Mon, 14 Jul 2026 10:22:16 +0000
+Authentication-Results: mx.northstar-example.test;
+  spf=pass smtp.mailfrom=riley.quinn@northstar-example.test;
+  dkim=pass header.d=northstar-example.test;
   dmarc=pass
 X-MS-Exchange-Organization-SCL: 1
-X-Prior-Correspondence: audit-engagement-2026-pwc
-In-Reply-To: <audit.request.20260710@pwc.com>
+X-Prior-Correspondence: audit-engagement-2026-veridian
+In-Reply-To: <audit.request.20260710@veridian-audit.test>
 
 --boundary_dlp_003
 Content-Type: text/plain; charset="UTF-8"
 
-Dear PwC Audit Team,
+Dear Veridian Audit Team,
 
 Following your request dated July 10, please find attached the
 financial statements required for the 2026 annual audit engagement.
 
-Attached documents:
-- Consolidated balance sheet Q1-Q2 2026
-- Income statement YTD
-- Notes to financial statements
+The documents are provided under the existing NDA and are classified
+as confidential. Please confirm receipt.
 
-These are provided as part of our ongoing audit engagement
-(reference: ODDO-BHF-AUDIT-2026) under NDA dated March 1, 2026.
-
-Please confirm receipt at your earliest convenience.
-
-Best regards,
-Alex Wilber
-IT Manager — ODDO BHF Tunis
+Kind regards,
+Riley Quinn
+IT Manager — Northstar Example
+Northstar Example — Finance Systems
 
 --boundary_dlp_003
 Content-Type: application/pdf
-Content-Disposition: attachment; filename="ODDO_BHF_Financial_Statements_H1_2026_AUDIT.pdf"
+Content-Disposition: attachment; filename="Northstar_Financial_Statements_H1_2026_AUDIT.pdf"
 Content-Transfer-Encoding: base64
-X-Document-Author: Finance Department
-X-Document-Company: ODDO BHF
-X-Document-Created: 2026-07-10T14:00:00
-X-Document-Modified: 2026-07-14T09:45:00
+X-Document-Author: Riley Quinn
+X-Document-Company: Northstar Example
+X-Document-Created: 2026-07-12T14:00:00
+X-Document-Modified: 2026-07-14T09:50:00
 
-JVBERi0xLjQKJcOkw7zDtsOfCjIgMCBvYmoKPDwvTGVuZ3RoIDMgMCBSL0ZpbHRlci9GbGF0
-ZURlY29kZT4+CnN0cmVhbQp4nCtUMjJQslIqS80rKUpVslIqLk4tykvMTQUAVRsHlQplbmRz
-dHJlYW0KZW5kb2JqCg==
+JVBERi0xLjQKJeLjz9MKNCAwIG9iago8PC9UeXBlL1BhZ2UvUGFyZW50IDMgMCBSPj4KZW5k
 
 --boundary_dlp_003--

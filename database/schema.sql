@@ -1,6 +1,5 @@
 -- =============================================================
--- SOC Enrichment Platform — IOC Database Schema
--- Example Corp Tunis — Mohamed Mensi — June 2026
+-- SOC Alert Enrichment Platform — IOC Database Schema
 -- =============================================================
 -- Tables:
 --   iocs              → normalized IOC records from all feeds

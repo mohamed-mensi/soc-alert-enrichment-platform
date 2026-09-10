@@ -1,59 +1,52 @@
-From: invoices@deloitte.com
-To: adele.vance@oddoBHF.com
-Subject: Invoice INV-2026-4471 - Audit Services Q2 2026
-Date: Mon, 07 Jul 2026 11:23:45 +0200
-Message-ID: <20260707112345.deloitte.inv4471@deloitte.com>
+From: invoices@veridian-audit.test
+To: jordan.blake@northstar-example.test
+Subject: Invoice INV-2026-8891 - Audit Services Q2 2026
+Date: Mon, 07 Jul 2026 11:23:45 +0000
+Message-ID: <20260707112345.veridian.inv8891@veridian-audit.test>
 MIME-Version: 1.0
 Content-Type: multipart/mixed; boundary="boundary_mix_003"
-Received: from mail.deloitte.com (151.101.130.49)
-  by mx.oddoBHF.com with SMTP; Mon, 07 Jul 2026 11:23:47 +0200
-Authentication-Results: mx.oddoBHF.com;
-  spf=pass (domain deloitte.com designates 151.101.130.49
+Received: from mail.veridian-audit.test (198.51.100.49)
+  by mx.northstar-example.test with SMTP; Mon, 07 Jul 2026 11:23:47 +0000
+Authentication-Results: mx.northstar-example.test;
+  spf=pass (domain veridian-audit.test designates 198.51.100.49
   as permitted sender)
-  smtp.mailfrom=invoices@deloitte.com;
-  dkim=pass header.d=deloitte.com header.s=selector1;
-  dmarc=pass action=none header.from=deloitte.com
+  smtp.mailfrom=invoices@veridian-audit.test;
+  dkim=pass header.d=veridian-audit.test header.s=selector1;
+  dmarc=pass action=none header.from=veridian-audit.test
 X-Spam-Status: No, score=0.2
-X-Original-To: adele.vance@oddoBHF.com
+X-Original-To: jordan.blake@northstar-example.test
 X-Mailer: Microsoft Exchange Server 2019
 
 --boundary_mix_003
 Content-Type: text/plain; charset="UTF-8"
 
-Dear Ms. Vance,
+Dear Jordan Blake,
 
-Please find attached invoice INV-2026-4471 for audit services
+Please find attached invoice INV-2026-8891 for audit services
 rendered during Q2 2026 as per our engagement letter dated
 March 15, 2026.
 
 Invoice Summary:
-  Invoice Number : INV-2026-4471
-  Invoice Date   : July 7, 2026
-  Due Date       : August 6, 2026
-  Amount Due     : EUR 28,500.00 (excl. VAT)
-  VAT (20%)      : EUR 5,700.00
-  Total Due      : EUR 34,200.00
+  Invoice Number : INV-2026-8891
+  Engagement     : Annual Audit 2026 — Interim Review
+  Period         : April 1 — June 30, 2026
+  Amount         : 12,400.00 (currency: fictional example)
+  Due Date       : July 30, 2026
+  Reference      : VER-2026-0147
 
-Payment details are included in the attached PDF.
-Please reference invoice number INV-2026-4471 in your payment.
-
-For any queries regarding this invoice please contact:
-  Sophie Martin — sophie.martin@deloitte.com
-  +33 1 40 88 28 00
+This is an automated message from Veridian Audit (fictional example vendor).
+Please do not reply directly to this address. For questions, contact
+audit.team@veridian-audit.test.
 
 Kind regards,
-Deloitte Finance Team
-Deloitte & Associes
-6 Place de la Pyramide
-92908 Paris-La Defense Cedex
+Veridian Audit — Finance & Assurance (Example Vendor)
+Example Address — Fictional City, Example Country
 
 --boundary_mix_003
-Content-Type: application/pdf; name="INV-2026-4471-Deloitte.pdf"
-Content-Disposition: attachment; filename="INV-2026-4471-Deloitte.pdf"
+Content-Type: application/pdf
+Content-Disposition: attachment; filename="INV-2026-8891_Veridian_Audit_Q2_2026.pdf"
 Content-Transfer-Encoding: base64
 
-JVBERi0xLjQKJcOkw7zDtsOfCjIgMCBvYmoKPDwvTGVuZ3RoIDMgMCBSL0ZpbHRlci9GbGF0
-ZURlY29kZT4+CnN0cmVhbQp4nCtUMjJQslIqS80rKUpVslIqLk4tykvMTQUAVRsHlQplbmRz
-dHJlYW0KZW5kb2JqCg==
+JVBERi0xLjQKJeLjz9MKNCAwIG9iago8PC9UeXBlL1BhZ2UvUGFyZW50IDMgMCBSPj4KZW5k
 
 --boundary_mix_003--
